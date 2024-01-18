@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-from collections import OrderedDict
 
 
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
-    __objects = OrderedDict()
+    __objects = {}
 
     def delete(self, obj=None):
         """delete object"""
