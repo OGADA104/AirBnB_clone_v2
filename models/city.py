@@ -4,6 +4,7 @@ from __future__ import annotations
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
+from models.place import Place
 
 
 class City(BaseModel, Base):
@@ -13,3 +14,4 @@ class City(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     state = relationship('State', back_populates='cities')
+    places = relationship('Place', back_populates='city', cascade='all, delete-orphan')
