@@ -221,7 +221,7 @@ class HBNBCommand(cmd.Cmd):
         objects = storage.all()
 
         if len(args) == 0:
-            print([str(obj) for obj in objects.values()])
+            print([str(obj) for obj in objects.values() if isinstance(obj, User)])
         elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
