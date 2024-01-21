@@ -44,3 +44,11 @@ class BaseModel:
     def delete(self):
         """ Delete the current instance from storage """
         models.storage.delete(self)
+
+    def __str__(self):
+        """Return the formatted string representation of the BaseModel instance"""
+        cls_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(
+            cls_name,
+            self.id,
+            str(self.__dict__).replace("'", '"'),)
