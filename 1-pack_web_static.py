@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """Generates a .tgz archive from the contents of the web_static folder."""
-from fabric.api import local
+from fabric import task
+from fabric.operations import local
 import time
 
 
+@task
 def do_pack():
     """Generate an tgz archive from web_static folder"""
     try:
