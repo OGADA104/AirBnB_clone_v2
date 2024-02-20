@@ -1,34 +1,22 @@
 #!/usr/bin/python3
-"""
-Fabric script that generates a .tgz archive from the contents of the web_static
-folder of your AirBnB Clone repo, using the function do_pack.
-"""
-from fabric import task
+# Fabfile to generates a .tgz archive from the contents of web_static.
+import os.path
 from datetime import datetime
-import os
+from fabric.api import local
 
-@task
-def do_pack(c):
-    """
-    Generates a .tgz archive from the contents of the web_static folder.
 
-    Returns:
-        str: Archive path if generated successfully, None otherwise.
-    """
-    try:
-        # Create the versions directory if it doesn't exist
-        c.run("mkdir -p versions")
-
-        # Create the name of the .tgz file with current timestamp
-        date_format = "%Y%m%d%H%M%S"
-        current_time = datetime.now().strftime(date_format)
-        archive_name = "web_static_{}.tgz".format(current_time)
-
-        # Compress the web_static folder into the .tgz file
-        c.run("tar -cvzf versions/{} web_static".format(archive_name))
-
-        # Return the archive path if generated successfully
-        return "versions/{}".format(archive_name)
-    except Exception as e:
-        print("An error occurred:", e)
+def do_pack():
+    """Create a tar gzipped archive of the directory web_static."""
+    dt = datetime.utcnow()
+    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
+                                                         dt.month,
+                                                         dt.day,
+                                                         dt.hour,
+                                                         dt.minute,
+                                                         dt.second)
+    if os.path.isdir("versions") is False:
+        if local("mkdir -p versions").failed is True:
+            return None
+    if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
+    return file
